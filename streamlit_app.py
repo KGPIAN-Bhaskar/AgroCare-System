@@ -192,7 +192,7 @@ with open("labels.txt", "r") as f:
 def load_model():
 
     interpreter = tf.lite.Interpreter(
-        model_path="model\model.tflite"
+        model_path="model/model.tflite"
     )
 
     interpreter.allocate_tensors()
