@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroCare — Plant Disease Detection</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Firebase Web SDK (v10 via CDN compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+
+  <!-- TensorFlow.js & TFLite CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@0.0.1-alpha.9/dist/tfjs-tflite.ndlb.js"></script>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-brand">
+        🌿 AgroCare
+      </a>
+      <div id="user-profile-bar" class="user-profile-bar" style="display: none;">
+        <span class="user-badge">
+          👤 <span id="user-display-name">Farmer Profile</span>
+        </span>
+        <button id="logout-btn" class="logout-btn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- =========================================================
+         1. AUTHENTICATION GATE (Registration, Login, Forgot Password)
+         ========================================================= -->
+    <div id="auth-gate">
+
+      <!-- Login View -->
+      <div id="login-view" class="auth-card">
+        <div class="auth-title">Welcome to AgroCare</div>
+        <div class="auth-subtitle">Sign in to detect crop diseases and access treatments</div>
+
+        <div id="login-error" class="auth-error-msg"></div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-email">Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="farmer@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" id="login-submit-btn" class="btn-primary">Login</button>
+
+          <div class="auth-footer" style="margin-top: 15px;">
+            <a href="#" id="link-to-forgot">Forgot Password?</a>
+          </div>
+
+          <div class="auth-footer">
+            Don't have an AgroCare account? <a href="#" id="link-to-register">Register</a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Registration View -->
+      <div id="register-view" class="auth-card" style="display: none;">
+        <div class="auth-title">Create AgroCare Account</div>
+        <div class="auth-subtitle">Join thousands of farmers using AI for crop protection</div>
+
+        <div id="reg-error" class="auth-error-msg"></div>
+
+        <form id="register-form">
+          <div class="form-group">
+            <label for="reg-name">Full Name</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="Bhaskar Mandal" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-email">Email Address</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="farmer@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-confirm-password">Confirm Password</label>
+            <input type="password" id="reg-confirm-password" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" id="reg-submit-btn" class="btn-primary">Create Account</button>
+
+          <div class="auth-footer">
+            Already have an AgroCare account? <a href="#" id="link-to-login">Login</a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Forgot Password View -->
+      <div id="forgot-view" class="auth-card" style="display: none;">
+        <div class="auth-title">Reset Password</div>
+        <div class="auth-subtitle">Enter your registered email to receive a password reset link</div>
+
+        <div id="forgot-error" class="auth-error-msg"></div>
+        <div id="forgot-success" class="auth-success-msg"></div>
+
+        <form id="forgot-form">
+          <div class="form-group">
+            <label for="forgot-email">Email Address</label>
+            <input type="email" id="forgot-email" class="form-control" placeholder="farmer@example.com" required>
+          </div>
+
+          <button type="submit" id="forgot-submit-btn" class="btn-primary">Send Reset Link</button>
+
+          <div class="auth-footer">
+            <a href="#" id="link-back-to-login">← Back to Login</a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         2. MAIN AGROCARE APPLICATION (Authenticated Users Only)
+         ========================================================= -->
+    <div id="main-app" style="display: none;">
+
+      <!-- Title Box -->
+      <div class="title-box">
+        <div class="title">
+          🌿 Plant Disease Detection
+        </div>
+      </div>
+
+      <div class="subtitle">
+        Upload a leaf image to detect plant disease
+      </div>
+
+      <!-- Upload Section -->
+      <div class="section-heading">📤 Upload Leaf Image</div>
+
+      <div class="upload-card">
+        <div id="upload-dropzone" class="dropzone" onclick="document.getElementById('leaf-image-input').click();">
+          <div class="dropzone-icon">🍃</div>
+          <div class="dropzone-text">Click or Drag & Drop Leaf Image Here</div>
+          <div class="dropzone-subtext">Supports JPG, JPEG, PNG</div>
+          <input type="file" id="leaf-image-input" class="file-input-hidden" accept="image/jpeg, image/jpg, image/png">
+        </div>
+      </div>
+
+      <!-- Image Preview -->
+      <div id="image-preview-container" class="image-preview-card">
+        <img id="preview-img" class="preview-img" src="" alt="Uploaded Leaf Preview">
+      </div>
+
+      <!-- Center Predict Button -->
+      <div id="predict-btn-container" class="predict-btn-row" style="display: none;">
+        <button id="predict-btn" class="predict-btn">
+          🔍 Predict
+        </button>
+      </div>
+
+      <!-- Prediction Results Section -->
+      <div id="results-container">
+
+        <!-- Success Box -->
+        <div class="success-box">
+          ✅ Prediction Completed Successfully
+        </div>
+
+        <!-- Prediction Result Card -->
+        <div class="prediction-card">
+          <div class="prediction-title">
+            🌿 Prediction Result
+          </div>
+
+          <div class="label">Disease</div>
+          <div id="res-disease-name" class="value">Tomato : Early Blight</div>
+
+          <hr>
+
+          <div class="label">Confidence</div>
+          <div id="res-confidence-text" class="value">98.50%</div>
+
+          <div class="progress-bar-track">
+            <div id="res-confidence-bar" class="progress-bar-fill"></div>
+          </div>
+        </div>
+
+        <!-- Treatment Recommendations & Products Details Card -->
+        <div class="treatment-details-card">
+          
+          <div class="sub-header">📖 Description</div>
+          <p id="res-description" class="description-text"></p>
+
+          <div class="sub-header">⚠ Symptoms</div>
+          <ul id="res-symptoms-list" class="bullet-list"></ul>
+
+          <div class="sub-header">✅ Treatment</div>
+          <ul id="res-actions-list" class="bullet-list"></ul>
+
+          <div class="sub-header" style="margin-top: 25px;">🧪 Recommended Products</div>
+          <div id="res-products-list" class="products-container"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Application Scripts (Loaded in dependency order) -->
+  <script src="labels.js"></script>
+  <script src="treatments.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="firebase-auth.js"></script>
+  <script src="firestore-service.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

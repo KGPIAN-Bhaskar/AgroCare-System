@@ -1,0 +1,568 @@
+/* =============================================================
+   AGROCARE - COMPLETE CSS STYLESHEET
+   Matching existing visual design language:
+   - Gradient: linear-gradient(135deg, #2e7d32, #66bb6a, #a5d6a7)
+   - Colors: #1b5e20, #2e7d32, #66bb6a, #a5d6a7, #ff9800, #d32f2f
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #2e7d32, #66bb6a, #a5d6a7);
+  min-height: 100vh;
+  color: #333;
+  padding-bottom: 50px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* -------------------------------------------------------------
+   NAVBAR & HEADER
+   ------------------------------------------------------------- */
+.navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  margin-bottom: 25px;
+}
+
+.nav-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1b5e20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.user-profile-bar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-badge {
+  background: #e8f5e9;
+  color: #1b5e20;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logout-btn {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.logout-btn:hover {
+  background: #b71c1c;
+  transform: translateY(-1px);
+}
+
+
+/* -------------------------------------------------------------
+   TITLE BOX & SUBTITLE
+   ------------------------------------------------------------- */
+.title-box {
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1b5e20;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 18px;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+  font-weight: 500;
+}
+
+
+/* -------------------------------------------------------------
+   AUTHENTICATION GATE CARDS (Registration, Login, Forgot Password)
+   ------------------------------------------------------------- */
+.auth-card {
+  background: white;
+  border-radius: 20px;
+  padding: 35px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  max-width: 460px;
+  margin: 20px auto;
+  border-top: 6px solid #1b5e20;
+}
+
+.auth-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1b5e20;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  font-size: 15px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #2e7d32;
+}
+
+.btn-primary {
+  width: 100%;
+  background: #1b5e20;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-primary:hover {
+  background: #2e7d32;
+  transform: scale(1.02);
+}
+
+.btn-primary:disabled {
+  background: #a5d6a7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.auth-footer a {
+  color: #1b5e20;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+.auth-error-msg {
+  background: #ffebee;
+  color: #c62828;
+  border-left: 4px solid #d32f2f;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 18px;
+  display: none;
+}
+
+.auth-success-msg {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border-left: 4px solid #2e7d32;
+  padding: 12px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 18px;
+  display: none;
+}
+
+
+/* -------------------------------------------------------------
+   MAIN AGROCARE APPLICATION UI
+   ------------------------------------------------------------- */
+
+/* Section Heading */
+.section-heading {
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Upload Card / Dropzone */
+.upload-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  margin-bottom: 25px;
+}
+
+.dropzone {
+  border: 3px dashed #a5d6a7;
+  border-radius: 16px;
+  padding: 35px 20px;
+  text-align: center;
+  background: #f9fbf9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropzone.dragover, .dropzone:hover {
+  border-color: #2e7d32;
+  background: #f0f7f0;
+}
+
+.dropzone-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.dropzone-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1b5e20;
+  margin-bottom: 6px;
+}
+
+.dropzone-subtext {
+  font-size: 14px;
+  color: #777;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+/* Image Preview Card */
+.image-preview-card {
+  display: none;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.preview-img {
+  max-width: 100%;
+  max-height: 380px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+/* Predict Button Row */
+.predict-btn-row {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 25px 0;
+}
+
+.predict-btn {
+  width: 60%;
+  max-width: 320px;
+  background: #1b5e20;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 14px;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.predict-btn:hover {
+  background: #2e7d32;
+  transform: scale(1.03);
+}
+
+.predict-btn:disabled {
+  background: #81c784;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* -------------------------------------------------------------
+   PREDICTION RESULTS UI (Card, Success Box, Treatments)
+   ------------------------------------------------------------- */
+#results-container {
+  display: none;
+}
+
+/* Success Box */
+.success-box {
+  background: white;
+  border-left: 8px solid #2e7d32;
+  border-radius: 15px;
+  padding: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #1b5e20;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Prediction Card */
+.prediction-card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
+  border-left: 8px solid #1b5e20;
+}
+
+.prediction-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #1b5e20;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 18px;
+  color: #666;
+  font-weight: bold;
+}
+
+.value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2e7d32;
+  margin-bottom: 15px;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #e0e0e0;
+  margin: 15px 0;
+}
+
+/* Progress Bar */
+.progress-bar-track {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  height: 16px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #2e7d32;
+  width: 0%;
+  transition: width 0.6s ease;
+  border-radius: 10px;
+}
+
+/* Treatment Sections Container */
+.treatment-details-card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.sub-header {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1b5e20;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sub-header:first-child {
+  margin-top: 0;
+}
+
+.description-text {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.bullet-list {
+  list-style: none;
+  padding-left: 5px;
+  margin-bottom: 20px;
+}
+
+.bullet-list li {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.bullet-list li::before {
+  content: "•";
+  color: #1b5e20;
+  font-size: 22px;
+  position: absolute;
+  left: 0;
+  top: -3px;
+}
+
+/* Recommended Product Cards & Link Buttons */
+.products-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.product-card {
+  background: #f9fbf9;
+  border: 1px solid #c8e6c9;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.product-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1b5e20;
+  margin-bottom: 12px;
+}
+
+.product-buttons-row {
+  display: flex;
+  gap: 15px;
+}
+
+.link-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.amazon-btn {
+  background: #ff9900;
+  color: #111;
+}
+
+.amazon-btn:hover {
+  background: #e68a00;
+  transform: translateY(-2px);
+}
+
+.flipkart-btn {
+  background: #2874f0;
+  color: white;
+}
+
+.flipkart-btn:hover {
+  background: #1256c4;
+  transform: translateY(-2px);
+}
+
+
+/* -------------------------------------------------------------
+   RESPONSIVE DESIGN ADAPTATIONS
+   ------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .title {
+    font-size: 32px;
+  }
+  .predict-btn {
+    width: 100%;
+  }
+  .product-buttons-row {
+    flex-direction: column;
+  }
+  .auth-card {
+    padding: 25px 20px;
+  }
+}
