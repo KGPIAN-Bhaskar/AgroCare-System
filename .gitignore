@@ -24,8 +24,10 @@ Thumbs.db
 # Jupyter
 .ipynb_checkpoints/
 
-# Environment variables
+# Environment variables & local credential keys
 .env
+env.js
+firebase-env.js
 
 # Python cache
 .pytest_cache/

@@ -1,21 +1,25 @@
-// Firebase Web SDK Initialization via CDN
+// Firebase Web SDK Initialization via Dynamic Environment Config
+
+const env = (typeof window !== "undefined" && window.AGROCARE_ENV) ? window.AGROCARE_ENV : {};
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD0kRkTjbJ3p7bKKt_o0jFbBhx6x7G7hHk",
-  authDomain: "agrocare-7a62d.firebaseapp.com",
-  projectId: "agrocare-7a62d",
-  storageBucket: "agrocare-7a62d.firebasestorage.app",
-  messagingSenderId: "845700293852",
-  appId: "1:845700293852:web:b4b57d74e1871298f78019"
+  apiKey: env.apiKey || "YOUR_FIREBASE_API_KEY",
+  authDomain: env.authDomain || "agrocare-7a62d.firebaseapp.com",
+  projectId: env.projectId || "agrocare-7a62d",
+  storageBucket: env.storageBucket || "agrocare-7a62d.firebasestorage.app",
+  messagingSenderId: env.messagingSenderId || "YOUR_MESSAGING_SENDER_ID",
+  appId: env.appId || "YOUR_APP_ID"
 };
 
 // Initialize Firebase
-if (!firebase.apps.length) {
+if (typeof firebase !== "undefined" && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const auth = firebase.auth();
-const db = firebase.firestore();
+const auth = (typeof firebase !== "undefined" && firebase.auth) ? firebase.auth() : null;
+const db = (typeof firebase !== "undefined" && firebase.firestore) ? firebase.firestore() : null;
 
 // Optional settings for Firestore
-db.settings({ ignoreUndefinedProperties: true });
+if (db && db.settings) {
+  db.settings({ ignoreUndefinedProperties: true });
+}
