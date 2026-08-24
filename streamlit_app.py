@@ -20,7 +20,7 @@ st.set_page_config(
 st.sidebar.title("🌿 AgroCare Platform")
 app_mode = st.sidebar.radio(
     "Select Application Interface:",
-    ["🌐 AgroCare Web App (Firebase Auth & Cloud Firestore)", "🐍 Streamlit Native Interface"]
+    ["🌐 AgroCare Web App (Firebase)", "🐍 Streamlit Native Interface"]
 )
 
 # Helper function to compile standalone web app bundle for Streamlit component
@@ -45,9 +45,9 @@ def load_web_app_bundle():
     return html_content
 
 # =========================================================================
-# MODE 1: AgroCare Web App (Firebase Authentication & Cloud Firestore)
+# MODE 1: AgroCare Web App (Firebase)
 # =========================================================================
-if app_mode == "🌐 AgroCare Web App (Firebase Auth & Cloud Firestore)":
+if app_mode == "🌐 AgroCare Web App (Firebase)":
     try:
         web_bundle = load_web_app_bundle()
         components.html(web_bundle, height=1150, scrolling=True)
