@@ -19,7 +19,7 @@ st.set_page_config(
 # Sidebar App View Selection
 st.sidebar.title("🌿 AgroCare Platform")
 app_mode = st.sidebar.radio(
-    "Select Application Interface:",
+    "Select:",
     ["🌐 AgroCare Web App (Firebase)", "🐍 Streamlit Native Interface"]
 )
 
